@@ -118,17 +118,33 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"main.js":[function(require,module,exports) {
-'use strict';
+var count = 0;
+var value = document.querySelector('#value');
+var btns = document.querySelectorAll('.btn');
+btns.forEach(function (btn) {
+  btn.addEventListener('click', function (e) {
+    var styles = e.currentTarget.classList;
 
-function counter() {
-  var seconds = 0;
-  setInterval(function () {
-    seconds += 1;
-    document.getElementById('app').innerHTML = "<p>You have been here for ".concat(seconds, " seconds.</p>");
-  }, 1000);
-}
+    if (styles.contains('decrease')) {
+      count--;
+    } else if (styles.contains('increase')) {
+      count++;
+    } else if (styles.contains('reset')) {
+      count = 0;
+    }
 
-counter();
+    if (count > 0) {
+      value.style.color = 'green';
+    } else if (count < 0) {
+      value.style.color = 'red';
+    } else {
+      value.style.color = 'black';
+    } // console.log(count)
+
+
+    value.textContent = count;
+  });
+});
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
